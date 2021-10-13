@@ -11,9 +11,10 @@ import (
 func InitCron() {
 	log.Instance().Info("定时任务开启")
 	c := cron.New()
-	c.Schedule(cron.Every(5*time.Minute), cron.FuncJob(func() {
+	c.Schedule(cron.Every(15*time.Minute), cron.FuncJob(func() {
 		DBReload()
 	}))
+	c.Start()
 }
 
 func DBReload() {
