@@ -22,6 +22,7 @@ require (
 	github.com/onsi/gomega v1.11.0 // indirect
 	github.com/patrickmn/go-cache v2.1.0+incompatible
 	github.com/pkg/sftp v1.13.4
+	github.com/robfig/cron/v3 v3.0.1
 	github.com/spf13/viper v1.7.1
 	github.com/xujiajun/nutsdb v0.6.0
 	go.uber.org/zap v1.16.0
