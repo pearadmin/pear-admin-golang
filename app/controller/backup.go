@@ -32,6 +32,8 @@ func TaskAdd(c *gin.Context) {
 		servers, _, _ := service.ServerList()
 		c.HTML(http.StatusOK, "task_add.html", gin.H{"servers": servers})
 	} else {
+		response.ErrorResp(c).SetMsg("演示服务器暂不提供此功能，请下载源码或发行版使用").WriteJsonExit()
+		return
 		var f request.TaskForm
 		if err := c.ShouldBind(&f); err != nil {
 			response.ErrorResp(c).SetMsg(validate.GetValidateError(err)).WriteJsonExit()

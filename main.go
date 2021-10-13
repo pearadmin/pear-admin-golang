@@ -13,6 +13,7 @@ import (
 	"pear-admin-go/app/core/log"
 	"pear-admin-go/app/core/redis"
 	"pear-admin-go/app/router"
+	"pear-admin-go/app/service"
 	"pear-admin-go/app/util/validate"
 	"syscall"
 	"time"
@@ -51,7 +52,7 @@ func main() {
 			os.Exit(0)
 		}
 	}()
-
+	go service.InitCron()
 	shutDown(s)
 }
 

@@ -5,7 +5,7 @@ import (
 	"github.com/cilidm/toolbox/ip"
 	"github.com/gin-gonic/gin"
 	"pear-admin-go/app/core/log"
-	dao2 "pear-admin-go/app/dao"
+	dao "pear-admin-go/app/dao"
 	"pear-admin-go/app/util/clientIP"
 
 	e2 "pear-admin-go/app/global/e"
@@ -42,7 +42,7 @@ func CreateOperLog(c *gin.Context, f model.OperForm) error {
 	oper.OperLocation = ip.GetCityByIp(oper.OperIp)
 	oper.ErrorMsg = f.ErrorMsg
 	oper.OperTime = time.Now().Format(e2.TimeFormat)
-	if err := dao2.NewOperLogDaoImpl().Insert(oper); err != nil {
+	if err := dao.NewOperLogDaoImpl().Insert(oper); err != nil {
 		return err
 	}
 	return nil
@@ -55,10 +55,13 @@ func OperLogListJsonService(f request.LayerListForm) (count int, list []model.Op
 	if f.Limit == 0 {
 		f.Limit = 10
 	}
-	list, count, err = dao2.NewOperLogDaoImpl().FindByPage(f.Page, f.Limit)
+	list, count, err = dao.NewOperLogDaoImpl().FindByPage(f.Page, f.Limit)
 	if err != nil {
 		log.Instance().Error("LoginInfoListJsonService.FindByPage:" + err.Error())
 		return 0, nil, err
+	}
+	for k, _ := range list {
+		list[k].OperIp = "*.*.*.*"
 	}
 	return count, list, nil
 }

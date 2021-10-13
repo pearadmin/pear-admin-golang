@@ -393,6 +393,9 @@ func GetLoginInfo(c *gin.Context) ([]model.LoginInfo, error) {
 	if err != nil {
 		return nil, err
 	}
+	for k,_ := range info{
+		info[k].IpAddr = "*.*.*.*"
+	}
 	return info, nil
 }
 

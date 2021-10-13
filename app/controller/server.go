@@ -32,6 +32,8 @@ func ServerAdd(c *gin.Context) {
 	if c.Request.Method == "GET" {
 		c.HTML(http.StatusOK, "server_add.html", nil)
 	} else {
+		response.ErrorResp(c).SetMsg("请不要在演示服务器保存服务器信息").WriteJsonExit()
+		return
 		var f request.TaskServerForm
 		if err := c.ShouldBind(&f); err != nil {
 			response.ErrorResp(c).SetMsg(validate.GetValidateError(err)).WriteJsonExit()
