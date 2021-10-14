@@ -2,7 +2,6 @@ package service
 
 import (
 	"encoding/json"
-	"github.com/cilidm/toolbox/ip"
 	"github.com/gin-gonic/gin"
 	"pear-admin-go/app/core/log"
 	dao "pear-admin-go/app/dao"
@@ -39,7 +38,8 @@ func CreateOperLog(c *gin.Context, f model.OperForm) error {
 	oper.OperUrl = c.Request.URL.Path
 	oper.Method = c.Request.Method
 	oper.OperIp = clientIP.GetIp(c.Request)
-	oper.OperLocation = ip.GetCityByIp(oper.OperIp)
+	//oper.OperLocation = ip.GetCityByIp(oper.OperIp)
+	oper.OperLocation, _ = clientIP.GetCityByIP(oper.OperIp)
 	oper.ErrorMsg = f.ErrorMsg
 	oper.OperTime = time.Now().Format(e2.TimeFormat)
 	if err := dao.NewOperLogDaoImpl().Insert(oper); err != nil {

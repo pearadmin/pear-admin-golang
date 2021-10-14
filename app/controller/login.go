@@ -2,7 +2,6 @@ package controller
 
 import (
 	"github.com/cilidm/toolbox/gconv"
-	"github.com/cilidm/toolbox/ip"
 	pkg "github.com/cilidm/toolbox/str"
 	"github.com/gin-gonic/gin"
 	"github.com/mssola/user_agent"
@@ -45,7 +44,7 @@ func LoginHandler(c *gin.Context) {
 	info.Os = ua.OS()
 	info.Browser = ub
 	info.LoginTime = time.Now()
-	info.LoginLocation = ip.GetCityByIp(clientIP.GetIp(c.Request))
+	info.LoginLocation, _ = clientIP.GetCityByIP(clientIP.GetIp(c.Request))
 
 	if sid, err := service.SignIn(req.UserName, req.Password, c); err != nil {
 		errNums := service.SetPwdErrNum(req.UserName)

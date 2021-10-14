@@ -9,15 +9,15 @@ import (
 )
 
 func InitCron() {
-	log.Instance().Info("定时任务开启")
 	c := cron.New()
-	c.Schedule(cron.Every(15*time.Minute), cron.FuncJob(func() {
+	c.Schedule(cron.Every(5*time.Minute), cron.FuncJob(func() {
 		DBReload()
 	}))
 	c.Start()
 }
 
 func DBReload() {
+	log.Instance().Info("开始执行定时任务")
 	db.Instance().DropTableIfExists(
 		&model.Admin{},
 		&model.AdminOnline{},
